@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306829eece46b39469c69c7998882c26, type: 3}
-  m_Name: New State
+  m_Script: {fileID: 11500000, guid: 8673346d01533e24bab156edaa171d83, type: 3}
+  m_Name: Player_ForceTransition
   m_EditorClassIdentifier: 
-  Duration: 0
+  TransitionTiming: 0

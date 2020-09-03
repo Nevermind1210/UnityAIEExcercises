@@ -6,6 +6,8 @@ namespace xavier_game
     public enum TransitionParameter
     {
         Move,
+        Jump,
+        ForceTransition,
     }
 
     public class CharacterControl : MonoBehaviour
@@ -13,6 +15,10 @@ namespace xavier_game
         public float Speed;
         public Animator animator;
         public Material material;
+        public bool moveRight;
+        public bool moveLeft;
+        public bool jump;
+
 
         public void ChangeMaterial()
         {
