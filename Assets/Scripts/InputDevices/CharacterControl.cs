@@ -19,6 +19,28 @@ namespace xavier_game
         public bool moveLeft;
         public bool jump;
 
+        private Rigidbody rigid;
+        public Rigidbody rb
+        {
+            get
+            {
+               if(rigid == null)
+                {
+                    rigid = GetComponent<Rigidbody>();
+                }
+                return rigid;
+            }
+        }
+
+        private void Awake()
+        {
+            CapsuleCollider cap = GetComponent<CapsuleCollider>();
+
+            float bottom = cap.bounds.center.y - cap.bounds.extents.y;
+            float top = cap.bounds.center.y + cap.bounds.extents.y;
+            float front = cap.bounds.center.z + cap.bounds.extents.z;
+            float back = cap.bounds.center.z - cap.bounds.extents.z;
+        }
 
         public void ChangeMaterial()
         {
