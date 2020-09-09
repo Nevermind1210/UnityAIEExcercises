@@ -4,7 +4,7 @@ using UnityEngine;
 namespace xavier_game
 {
     public class KeyboardInput : MonoBehaviour
-    { 
+    {
         void Update()
         {
             if (Input.GetKey(KeyCode.D))
@@ -35,5 +35,4 @@ namespace xavier_game
 
         }
     }
-
 }
