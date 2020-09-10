@@ -10,36 +10,38 @@ namespace xavier_game
         {
             characterControl = this.gameObject.GetComponent<CharacterControl>();
         }
-        protected Joystick joystick;
-        protected JoyButton JoyButton;
+        public Joystick joystick;
+        public JoyButton JoyButton;
 
         protected bool jump;
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            joystick = FindObjectOfType<Joystick>();
-            JoyButton = FindObjectOfType<JoyButton>();
-        }
 
         // Update is called once per frame
         void Update()
         {
-            var rb = GetComponent<Rigidbody>();
-
-            rb.velocity = new Vector3(joystick.Horizontal * 100f,
-                                      rb.velocity.y,
-                                      joystick.Vertical * 100f);
-
-            if (!jump && JoyButton.Pressed)
+            if (VirtualInputManager.Instance.moveRight)
             {
-                jump = true;
-                rb.velocity += Vector3.up * 100f;
+                characterControl.moveRight = true;
+            }
+            else
+            {
+                characterControl.moveRight = false;
             }
 
-            if(jump && !JoyButton.Pressed)
+            if (VirtualInputManager.Instance.moveLeft)
             {
-                jump = false;
+                characterControl.moveLeft = true;
+            }
+            else
+            {
+                characterControl.moveLeft = false;
+            }
+            if (VirtualInputManager.Instance.jump)
+            {
+                characterControl.jump = true;
+            }
+            else
+            {
+                characterControl.jump = false;
             }
         }
     }
