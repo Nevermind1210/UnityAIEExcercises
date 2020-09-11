@@ -7,7 +7,9 @@ namespace xavier_game
     [CreateAssetMenu(fileName = "New State", menuName = "Xavier's Game/AbilityData/MoveForward")]
     public class MoveForward : StateData
     {
+        public AnimationCurve SpeedGraph;
         public float Speed;
+        public float BlockDist;
 
         public override void OnEnter(CharacterState characterState, Animator animator, AnimatorStateInfo stateInfo)
         {
@@ -18,28 +20,39 @@ namespace xavier_game
         {
             CharacterControl control = characterState.GetCharacterControl(animator);
 
-            if (VirtualInputManager.Instance.moveRight && VirtualInputManager.Instance.moveLeft)
+            if (control.jump)
+            {
+                animator.SetBool(TransitionParameter.Jump.ToString(), true);
+            }
+
+            if (control.moveRight && control.moveLeft)
             {
                 animator.SetBool(TransitionParameter.Move.ToString(), false);
                 return;
             }
 
-            if (!VirtualInputManager.Instance.moveRight && !VirtualInputManager.Instance.moveLeft)
+            if (!control.moveRight && !control.moveLeft)
             {
                 animator.SetBool(TransitionParameter.Move.ToString(), false);
                 return;
             }
 
-            if (VirtualInputManager.Instance.moveRight)
+            if (control.moveRight)
             {
-                control.transform.Translate(Vector3.forward * Speed * Time.deltaTime);
                 control.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                if (!CheckFront(control))
+                {
+                    control.transform.Translate(Vector3.forward * Speed * SpeedGraph.Evaluate(stateInfo.normalizedTime) * Time.deltaTime);
+                }
             }
 
-            if (VirtualInputManager.Instance.moveLeft)
+            if (control.moveLeft)
             {
-                control.transform.Translate(Vector3.forward * Speed * Time.deltaTime);
                 control.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                if (!CheckFront(control))
+                {
+                    control.transform.Translate(Vector3.forward * Speed * SpeedGraph.Evaluate(stateInfo.normalizedTime) * Time.deltaTime);
+                }
             }
         }
         public override void OnExit(CharacterState characterState, Animator animator, AnimatorStateInfo stateInfo)
@@ -47,5 +60,18 @@ namespace xavier_game
             
         }
 
+        bool CheckFront(CharacterControl control)
+        {
+            foreach (GameObject o in control.FrontSpheres)
+            {
+                Debug.DrawRay(o.transform.position, control.transform.forward * 0.3f, Color.yellow);
+                RaycastHit hit;
+                if (Physics.Raycast(o.transform.position, control.transform.forward, out hit, BlockDist))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

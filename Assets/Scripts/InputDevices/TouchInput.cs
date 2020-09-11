@@ -5,43 +5,33 @@ namespace xavier_game
 {
     public class TouchInput : MonoBehaviour
     {
-        private CharacterControl characterControl;
-        private void Awake()
-        {
-            characterControl = this.gameObject.GetComponent<CharacterControl>();
-        }
-        public Joystick joystick;
-        public JoyButton JoyButton;
-
-        protected bool jump;
-
         // Update is called once per frame
         void Update()
         {
             if (VirtualInputManager.Instance.moveRight)
             {
-                characterControl.moveRight = true;
+                VirtualInputManager.Instance.moveRight = true;
             }
             else
             {
-                characterControl.moveRight = false;
+                VirtualInputManager.Instance.moveRight = false;
             }
 
             if (VirtualInputManager.Instance.moveLeft)
             {
-                characterControl.moveLeft = true;
+                VirtualInputManager.Instance.moveLeft = true;
             }
             else
             {
-                characterControl.moveLeft = false;
+                VirtualInputManager.Instance.moveLeft = false;
             }
             if (VirtualInputManager.Instance.jump)
             {
-                characterControl.jump = true;
+                VirtualInputManager.Instance.jump = true;
             }
             else
             {
-                characterControl.jump = false;
+                VirtualInputManager.Instance.jump = false;
             }
         }
     }

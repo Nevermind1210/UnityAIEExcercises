@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75572484d2550b146bc72923e7e9693a, type: 3}
   m_Name: Player_Grounded_Jump
   m_EditorClassIdentifier: 
-  CheckTime: 0.1
-  Distance: 0.025
+  CheckTime: 0.2
+  Distance: 0.05
