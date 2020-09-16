@@ -21,6 +21,7 @@ namespace xavier_game
         public GameObject ColliderEdgePrefab;
         public List<GameObject> BottomSpheres = new List<GameObject>();
         public List<GameObject> FrontSpheres = new List<GameObject>();
+        public List<Collider> RagdollParts = new List<Collider>();
 
         public float GravityMultiplier;
         public float PullMultipiler;
@@ -39,6 +40,26 @@ namespace xavier_game
         }
 
         private void Awake()
+        {
+            SetRagdollParts();
+            SetColliderSpheres();
+        }
+
+        private void SetRagdollParts()
+        {
+            Collider[] colliders = this.gameObject.GetComponentsInChildren<Collider>();
+
+            foreach(Collider c in colliders)
+            {
+                if (c.gameObject != this.gameObject)
+                {
+                   c.isTrigger = true;
+                    RagdollParts.Add(c);
+                }
+            }
+        }
+
+        private void SetColliderSpheres()
         {
             BoxCollider box = GetComponent<BoxCollider>();
 
